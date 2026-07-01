@@ -1,0 +1,7 @@
+node_modules
+dist
+dist-electron
+release
+.env
+.claude/settings.local.json
+.claude/scheduled_tasks.lock

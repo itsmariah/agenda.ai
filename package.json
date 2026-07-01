@@ -1,0 +1,60 @@
+{
+  "name": "agenda-ai",
+  "version": "1.0.0",
+  "description": "AI-powered appointment scheduling platform",
+  "main": "dist-electron/main.js",
+  "author": "agenda.ai",
+  "license": "ISC",
+  "scripts": {
+    "electron:dev": "concurrently \"npm run dev --prefix frontend\" \"tsx electron/main.ts\"",
+    "electron:build": "npm run build --prefix frontend && npx tsx -e \"\" && electron-builder",
+    "build:electron": "tsc -p electron/tsconfig.json && electron-builder build",
+    "dev:frontend": "npm run dev --prefix frontend",
+    "dev:backend": "npm run start:dev --prefix backend"
+  },
+  "build": {
+    "appId": "com.agendaai.app",
+    "productName": "Agenda AI",
+    "copyright": "Copyright © 2026 agenda.ai",
+    "directories": {
+      "output": "release",
+      "buildResources": "resources"
+    },
+    "files": [
+      "dist-electron/**/*",
+      "frontend/dist/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "backend",
+        "to": "backend",
+        "filter": ["**/*", "!node_modules", "!src", "!*.md"]
+      }
+    ],
+    "win": {
+      "target": [{ "target": "nsis", "arch": ["x64"] }],
+      "icon": "resources/icon.ico"
+    },
+    "mac": {
+      "target": [{ "target": "dmg", "arch": ["x64", "arm64"] }],
+      "icon": "resources/icon.icns"
+    },
+    "linux": {
+      "target": [{ "target": "AppImage", "arch": ["x64"] }],
+      "icon": "resources/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "runAfterFinish": true
+    }
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.3",
+    "electron": "^42.4.1",
+    "electron-builder": "^26.15.3",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
+  }
+}
