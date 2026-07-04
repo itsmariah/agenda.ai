@@ -2,6 +2,17 @@
 
 Plataforma de agendamento inteligente para negócios de serviços (salões, clínicas, barbearias, etc). Clientes marcam horário conversando com um assistente de IA; donos do negócio administram serviços, funcionários e agendamentos, e recebem insights automáticos gerados por IA sobre o desempenho do negócio.
 
+![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=flat&logo=nestjs&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat&logo=tailwindcss&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=flat&logo=postgresql&logoColor=white)
+![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=flat&logo=prisma&logoColor=white)
+![Electron](https://img.shields.io/badge/Electron-47848F?style=flat&logo=electron&logoColor=white)
+![Anthropic Claude](https://img.shields.io/badge/Claude-D97757?style=flat&logo=anthropic&logoColor=white)
+![Resend](https://img.shields.io/badge/Resend-000000?style=flat&logo=resend&logoColor=white)
+
 ## Sumário
 
 - [Visão geral](#visão-geral)
@@ -48,9 +59,11 @@ O projeto também pode rodar como aplicativo desktop via Electron.
 
 | Camada | Tecnologias |
 |---|---|
-| Backend | NestJS 11, Prisma 7 (driver adapter `pg`), PostgreSQL, Passport + JWT, Swagger |
+| Backend | NestJS 11, TypeScript, Prisma 7 (driver adapter `@prisma/adapter-pg`), PostgreSQL, Swagger |
+| Autenticação | JWT (`@nestjs/jwt` + Passport), bcrypt para hash de senha, guards de papel (`ADMIN`/`EMPLOYEE`/`CLIENT`), validação com `class-validator`/`class-transformer` |
 | IA | Claude (Anthropic SDK) — chat de agendamento com tool-use, assistente de gestão, geração de insights |
-| Frontend | React 19, Vite 8, TypeScript, Tailwind CSS v4, React Router, Zustand, Axios |
+| E-mail | Resend — envio do link de redefinição de senha |
+| Frontend | React 19, Vite 8, TypeScript, Tailwind CSS v4, React Router 7, Zustand, Axios |
 | Desktop | Electron + electron-builder (Windows, macOS, Linux) |
 | Infra | Railway (backend), Vercel (frontend) |
 
