@@ -38,7 +38,7 @@ export default function ClientHome() {
             <Link
               key={est.id}
               to={`/client/book/${est.id}`}
-              className="bg-white border border-gray-200 rounded-xl p-6 hover:border-blue-300 hover:shadow-sm transition-all group"
+              className="bg-white border border-gray-200 rounded-xl shadow-sm p-6 hover:border-blue-300 hover:shadow-md transition-all group"
             >
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 text-xl font-bold group-hover:bg-blue-200 transition-colors">

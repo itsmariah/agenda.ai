@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Role } from '@prisma/client';
 import { EstablishmentsService } from './establishments.service';
@@ -49,5 +49,14 @@ export class EstablishmentsController {
   @ApiOperation({ summary: 'Atualizar estabelecimento' })
   update(@Param('id') id: string, @CurrentUser() user: any, @Body() dto: CreateEstablishmentDto) {
     return this.service.update(id, user.id, dto);
+  }
+
+  @Delete(':id')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
+  @ApiOperation({ summary: 'Excluir estabelecimento (apenas o dono)' })
+  remove(@Param('id') id: string, @CurrentUser() user: any) {
+    return this.service.remove(id, user.id);
   }
 }

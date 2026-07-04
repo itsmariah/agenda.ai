@@ -70,7 +70,7 @@ export default function BookingChat() {
         )}
       </div>
 
-      <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden flex flex-col" style={{ height: '70vh' }}>
+      <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden flex flex-col" style={{ height: '70vh' }}>
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
           {messages.length === 0 && (
             <div className="text-center mt-12">
@@ -82,7 +82,7 @@ export default function BookingChat() {
               <div className="mt-4 flex flex-wrap gap-2 justify-center">
                 {['Quero agendar um horário', 'Quais serviços vocês oferecem?', 'Tem horário disponível amanhã?'].map(
                   (s) => (
-                    <Badge key={s} tone="blue" onClick={() => setInput(s)} className="hover:bg-blue-100">
+                    <Badge key={s} tone="blue" onClick={() => setInput(s)}>
                       {s}
                     </Badge>
                   ),

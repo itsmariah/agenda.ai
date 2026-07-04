@@ -40,4 +40,10 @@ export class EstablishmentsService {
   async findByOwner(ownerId: string) {
     return this.prisma.establishment.findUnique({ where: { ownerId } });
   }
+
+  async remove(id: string, ownerId: string) {
+    const est = await this.findOne(id);
+    if (est.ownerId !== ownerId) throw new ForbiddenException();
+    return this.prisma.establishment.delete({ where: { id } });
+  }
 }

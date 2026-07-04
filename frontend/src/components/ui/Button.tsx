@@ -1,7 +1,7 @@
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'ghost';
+  variant?: 'primary' | 'secondary' | 'ghost' | 'inverse' | 'danger';
   size?: 'sm' | 'md' | 'none';
   loading?: boolean;
   loadingText?: ReactNode;
@@ -11,6 +11,8 @@ const VARIANT_CLASSES: Record<NonNullable<ButtonProps['variant']>, string> = {
   primary: 'bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50',
   secondary: 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 disabled:opacity-50',
   ghost: 'text-gray-500 disabled:opacity-50',
+  inverse: 'bg-white text-blue-700 hover:bg-blue-50 disabled:opacity-50',
+  danger: 'bg-red-600 text-white hover:bg-red-700 disabled:opacity-50',
 };
 
 const SIZE_CLASSES: Record<NonNullable<ButtonProps['size']>, string> = {
@@ -32,7 +34,7 @@ export default function Button({
   return (
     <button
       disabled={disabled || loading}
-      className={`rounded-lg font-medium transition-colors ${VARIANT_CLASSES[variant]} ${SIZE_CLASSES[size]} ${className}`}
+      className={`rounded-lg font-medium transition-all active:scale-[0.98] ${VARIANT_CLASSES[variant]} ${SIZE_CLASSES[size]} ${className}`}
       {...rest}
     >
       {loading ? (loadingText ?? 'Carregando...') : children}

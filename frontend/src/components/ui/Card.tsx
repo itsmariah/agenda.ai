@@ -21,12 +21,12 @@ export default function Card({
 }: CardProps) {
   const activeClasses = active ? 'border-gray-200' : 'border-gray-100 opacity-50';
   const hoverClasses = hoverable
-    ? 'hover:border-blue-300 hover:shadow-sm transition-all group'
+    ? 'hover:border-blue-300 hover:shadow-md transition-all group'
     : '';
 
   return (
     <div
-      className={`bg-white rounded-xl border ${activeClasses} ${hoverClasses} ${PADDING_CLASSES[padding]} ${className}`}
+      className={`bg-white rounded-xl border shadow-sm ${activeClasses} ${hoverClasses} ${PADDING_CLASSES[padding]} ${className}`}
       {...rest}
     >
       {children}

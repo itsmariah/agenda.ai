@@ -2,8 +2,13 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
 import AdminLayout from './components/AdminLayout';
 import ClientLayout from './components/ClientLayout';
+import LandingPage from './pages/LandingPage';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
+import ForgotPassword from './pages/auth/ForgotPassword';
+import ResetPassword from './pages/auth/ResetPassword';
+import EstablishmentOnboarding from './pages/admin/EstablishmentOnboarding';
+import Profile from './pages/Profile';
 import Dashboard from './pages/admin/Dashboard';
 import Assistant from './pages/admin/Assistant';
 import Insights from './pages/admin/Insights';
@@ -19,8 +24,16 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         {/* Public */}
+        <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+
+        {/* Admin onboarding */}
+        <Route element={<PrivateRoute allowedRoles={['ADMIN']} />}>
+          <Route path="/admin/onboarding" element={<EstablishmentOnboarding />} />
+        </Route>
 
         {/* Admin */}
         <Route element={<PrivateRoute allowedRoles={['ADMIN', 'EMPLOYEE']} />}>
@@ -31,6 +44,7 @@ export default function App() {
             <Route path="/admin/appointments" element={<Appointments />} />
             <Route path="/admin/services" element={<Services />} />
             <Route path="/admin/employees" element={<Employees />} />
+            <Route path="/admin/profile" element={<Profile />} />
           </Route>
         </Route>
 
@@ -40,6 +54,7 @@ export default function App() {
             <Route path="/client" element={<ClientHome />} />
             <Route path="/client/book/:estId" element={<BookingChat />} />
             <Route path="/client/appointments" element={<MyAppointments />} />
+            <Route path="/client/profile" element={<Profile />} />
           </Route>
         </Route>
 

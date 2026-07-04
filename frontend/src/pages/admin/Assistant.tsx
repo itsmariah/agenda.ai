@@ -69,7 +69,7 @@ export default function Assistant() {
                 'Qual meu serviço mais popular?',
                 'Alguma sugestão para aumentar os agendamentos?',
               ].map((s) => (
-                <Badge key={s} tone="blue" onClick={() => setInput(s)} className="hover:bg-blue-100">
+                <Badge key={s} tone="blue" onClick={() => setInput(s)}>
                   {s}
                 </Badge>
               ))}

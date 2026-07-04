@@ -28,8 +28,8 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 w-full max-w-md">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100 flex items-center justify-center px-4">
+      <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 w-full max-w-md">
         <div className="mb-8 text-center">
           <h1 className="text-2xl font-bold text-blue-600">agenda.ai</h1>
           <p className="text-gray-500 text-sm mt-1">Entre na sua conta</p>
@@ -54,6 +54,12 @@ export default function Login() {
               placeholder="••••••••"
             />
           </Field>
+
+          <div className="text-right">
+            <Link to="/forgot-password" className="text-sm text-blue-600 hover:underline">
+              Esqueci minha senha
+            </Link>
+          </div>
 
           {error && <p className="text-red-500 text-sm">{error}</p>}
 

@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/auth.store';
 import api from '../../lib/api';
-import { Card, PageHeader } from '../../components/ui';
+import { Button, Card, ConfirmDialog, PageHeader } from '../../components/ui';
 
 interface Stats {
   total: number;
@@ -24,10 +25,15 @@ function StatCard({ label, value, sub }: { label: string; value: number | string
 
 export default function Dashboard() {
   const { user } = useAuthStore();
+  const navigate = useNavigate();
+  const [estId, setEstId] = useState<string | null>(null);
   const [stats, setStats] = useState<Stats | null>(null);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     api.get('/establishments/my').then(({ data }) => {
+      setEstId(data.id);
       return api.get(`/appointments/establishment/${data.id}/stats`);
     }).then(({ data }) => setStats(data));
   }, []);
@@ -35,6 +41,18 @@ export default function Dashboard() {
   const growthPct = stats && stats.lastMonth > 0
     ? (((stats.thisMonth - stats.lastMonth) / stats.lastMonth) * 100).toFixed(0)
     : null;
+
+  async function handleDelete() {
+    if (!estId) return;
+    setDeleting(true);
+    try {
+      await api.delete(`/establishments/${estId}`);
+      navigate('/admin/onboarding', { replace: true });
+    } finally {
+      setDeleting(false);
+      setShowConfirm(false);
+    }
+  }
 
   return (
     <div className="p-8">
@@ -91,6 +109,26 @@ export default function Dashboard() {
           </div>
         </>
       )}
+
+      <Card className="mt-8">
+        <h2 className="font-semibold text-gray-900">Zona de risco</h2>
+        <p className="text-sm text-gray-500 mt-1">
+          Excluir o estabelecimento apaga permanentemente serviços, funcionários, agendamentos e
+          conversas relacionados. Essa ação não pode ser desfeita.
+        </p>
+        <Button variant="danger" size="sm" className="mt-4" onClick={() => setShowConfirm(true)}>
+          Excluir estabelecimento
+        </Button>
+      </Card>
+
+      <ConfirmDialog
+        open={showConfirm}
+        title="Excluir estabelecimento"
+        message="Tem certeza que deseja excluir esse negócio? Essa ação é permanente e vai apagar todos os serviços, funcionários, agendamentos e conversas relacionados."
+        onConfirm={handleDelete}
+        onCancel={() => setShowConfirm(false)}
+        loading={deleting}
+      />
     </div>
   );
 }

@@ -4,6 +4,8 @@ interface User {
   id: string;
   name: string;
   email: string;
+  phone?: string;
+  avatarUrl?: string;
   role: 'ADMIN' | 'EMPLOYEE' | 'CLIENT';
 }
 
@@ -11,6 +13,7 @@ interface AuthState {
   user: User | null;
   token: string | null;
   login: (token: string, user: User) => void;
+  updateUser: (user: User) => void;
   logout: () => void;
 }
 
@@ -23,6 +26,10 @@ export const useAuthStore = create<AuthState>((set) => ({
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(user));
     set({ token, user });
+  },
+  updateUser: (user) => {
+    localStorage.setItem('user', JSON.stringify(user));
+    set({ user });
   },
   logout: () => {
     localStorage.removeItem('token');

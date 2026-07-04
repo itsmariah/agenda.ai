@@ -5,4 +5,5 @@ export { default as Field } from './Field';
 export { default as Badge, BADGE_TONE_CLASSES } from './Badge';
 export type { BadgeTone } from './Badge';
 export { default as PageHeader } from './PageHeader';
+export { default as ConfirmDialog } from './ConfirmDialog';
 export { STATUS_LABELS, STATUS_TONES, statusClasses } from './statusStyles';

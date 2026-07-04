@@ -55,7 +55,7 @@ export default function Employees() {
       />
 
       {showForm && (
-        <form onSubmit={handleSave} className="bg-white border border-gray-200 rounded-xl p-6 mb-6 space-y-4">
+        <form onSubmit={handleSave} className="bg-white border border-gray-200 rounded-xl shadow-sm p-6 mb-6 space-y-4">
           <h2 className="font-semibold text-gray-800">Novo funcionário</h2>
           <div className="grid grid-cols-3 gap-4">
             {[

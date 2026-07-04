@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import api from '../../lib/api';
 import { useAuthStore } from '../../store/auth.store';
 import { Button, Field, Input } from '../../components/ui';
 
 export default function Register() {
+  const [searchParams] = useSearchParams();
+  const [role, setRole] = useState<'CLIENT' | 'ADMIN'>(searchParams.get('as') === 'admin' ? 'ADMIN' : 'CLIENT');
   const [form, setForm] = useState({ name: '', email: '', password: '', phone: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -20,9 +22,9 @@ export default function Register() {
     setError('');
     setLoading(true);
     try {
-      const { data } = await api.post('/auth/register', { ...form, role: 'CLIENT' });
+      const { data } = await api.post('/auth/register', { ...form, role });
       login(data.token, data.user);
-      navigate('/client');
+      navigate(role === 'ADMIN' ? '/admin/onboarding' : '/client');
     } catch (err: any) {
       setError(err.response?.data?.message ?? 'Erro ao criar conta.');
     } finally {
@@ -31,11 +33,30 @@ export default function Register() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 w-full max-w-md">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100 flex items-center justify-center px-4">
+      <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 w-full max-w-md">
         <div className="mb-8 text-center">
           <h1 className="text-2xl font-bold text-blue-600">agenda.ai</h1>
-          <p className="text-gray-500 text-sm mt-1">Crie sua conta de cliente</p>
+          <p className="text-gray-500 text-sm mt-1">
+            {role === 'ADMIN' ? 'Cadastre seu negócio' : 'Crie sua conta de cliente'}
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 gap-2 mb-6">
+          <Button
+            type="button"
+            variant={role === 'CLIENT' ? 'primary' : 'secondary'}
+            onClick={() => setRole('CLIENT')}
+          >
+            Sou cliente
+          </Button>
+          <Button
+            type="button"
+            variant={role === 'ADMIN' ? 'primary' : 'secondary'}
+            onClick={() => setRole('ADMIN')}
+          >
+            Tenho um negócio
+          </Button>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
